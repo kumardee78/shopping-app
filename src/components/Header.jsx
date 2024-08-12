@@ -28,36 +28,42 @@ function Header() {
   return (
     <div>
       <div className="text-end py-3 bg-[#021431] text-white">
-        <Link to="/signin" className=" hover:text-gray-300 duration-300">
+        <Link to="/loggedin" className=" hover:text-gray-300 duration-300">
           Login / Guest
         </Link>
-        <Link to="/signup" className="md:px-20 px-6 hover:text-gray-300 duration-300">
+        <Link to="/register" className="md:px-20 px-6 hover:text-gray-300 duration-300">
           Create Account
         </Link>
       </div>
-      <div className="flex justify-between items-center gap-4 bg-[#f0f6ff] md:px-20 px-6 py-2">
+      <div className="flex justify-between items-center gap-4 bg-[#f0f6ff] md:px-12 lg:px-20  px-6 py-2">
         <div className="md:flex hidden justify-between items-center grow">
           <h1 className="p-2 bg-[#021431] rounded-lg font-semibold text-xl text-white">
             Shopping App
           </h1>
-          <nav className="flex">
+          <nav className="flex text-xl">
             <Link
               to="/"
-              className="py-4 px-8 hover:bg-gray-300 rounded-lg duration-300 font-semibold text-[#021431]"
+              className="py-4 md:px-6 lg:px-8 hover:bg-gray-300 rounded-lg duration-300 font-semibold text-[#021431]"
             >
               Home
             </Link>
 
             <Link
               to="/products"
-              className="py-4 px-8 hover:bg-gray-300 rounded-lg duration-300 font-semibold text-[#021431]"
+              className="py-4 md:px-6 lg:px-8 hover:bg-gray-300 rounded-lg duration-300 font-semibold text-[#021431]"
             >
               Products
+            </Link>
+            <Link
+              to="/cart"
+              className="py-4 md:px-6 lg:px-8 hover:bg-gray-300 rounded-lg duration-300 font-semibold text-[#021431]"
+            >
+              Cart
             </Link>
 
             <Link
               to="/checkout"
-              className="py-4 px-8 hover:bg-gray-300 rounded-lg duration-300 font-semibold text-[#021431]"
+              className="py-4 md:px-6 lg:px-8 hover:bg-gray-300 rounded-lg duration-300 font-semibold text-[#021431]"
             >
               CheckOut
             </Link>
@@ -67,13 +73,13 @@ function Header() {
         <div className="text-2xl bg-[#f0f6ff] border-2 border-[#021431] p-1 md:hidden block relative">
           <GiHamburgerMenu className="" onClick={handleToggleDiv} />
         </div>
-        <HamberMenu isShown={isShown} className="md:hidden block" />
-        <Link to="/cart" className="text-2xl p-2 rounded-full bg-gray-300 hover:bg-[#201431] hover:text-white duration-300 relative">
+        <HamberMenu isShown={isShown} className="lg:hidden block" />
+        <p className="text-2xl p-4 rounded-full hover:bg-gray-300 duration-300 relative">
           <MdShoppingCart />
-          <span className="absolute -top-2 text-white px-1 right-0 border bg-red-500 rounded-full text-sm">
+          <span className="absolute top-0 text-white px-1 right-2 border bg-red-500 rounded-full text-sm">
             {qty}
           </span>
-        </Link>
+        </p>
       </div>
     </div>
   );

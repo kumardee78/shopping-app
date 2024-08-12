@@ -3,14 +3,14 @@ import { ecomContext } from "../App";
 import { Link } from "react-router-dom";
 
 function Products() {
-  const { products, setProducts } = useContext(ecomContext);
+  const { products } = useContext(ecomContext);
   const [inputValue, setInputValue] = useState("");
   const [filterProducts, setFilterProducts] = useState(products);
 
   const filterProduct = () => {
     const temp = [...products];
     const filtered = temp.filter((product) => {
-      return product.attributes.title.toLowerCase().includes(inputValue);
+      return product.title.toLowerCase().includes(inputValue);
     });
     // console.log(filtered);
     setFilterProducts(filtered);
@@ -31,7 +31,7 @@ function Products() {
       console.log(target);
       let temp = [...products];
       const filtered = temp.filter((item) =>
-        item.attributes.company.toLowerCase().includes(target)
+        item.company.toLowerCase().includes(target)
       );
       setFilterProducts(filtered);
     } else if (target === "all") {
@@ -51,7 +51,7 @@ function Products() {
       console.log(target);
       let temp = [...products];
       const filtered = temp.filter((item) =>
-        item.attributes.category.toLowerCase().includes(target)
+        item.category.toLowerCase().includes(target)
       );
       setFilterProducts(filtered);
     } else if (target === "all") {
@@ -64,25 +64,25 @@ function Products() {
     let temp = [...products];
     if (target === "a-z") {
       const filtered = temp.sort((a, b) =>
-        a.attributes.title.localeCompare(b.attributes.title)
+        a.title.localeCompare(b.title)
       );
       setFilterProducts(filtered);
     }
     if (target === "z-a") {
       const filtered = temp.sort((a, b) =>
-        b.attributes.title.localeCompare(a.attributes.title)
+        b.title.localeCompare(a.title)
       );
       setFilterProducts(filtered);
     }
     if (target === "lowhigh") {
       const filtered = temp.sort(
-        (a, b) => a.attributes.price - b.attributes.price
+        (a, b) => a.price - b.price
       );
       setFilterProducts(filtered);
     }
     if (target === "highlow") {
       const filtered = temp.sort(
-        (a, b) => b.attributes.price - a.attributes.price
+        (a, b) => b.price - a.price
       );
       setFilterProducts(filtered);
     }
@@ -156,7 +156,7 @@ function Products() {
         <p className="text-center bg-blue-500 rounded-lg py-2 text-xl text-white w-[80%] mx-auto cursor-pointer mt-3" onClick={clearFilter}>ClearFilter</p>
       </div>
       <div className="flex flex-wrap gap-y-6 justify-around text-center px-2 md:py-0 py-6">
-        {filterProducts.map((product) => {
+        {filterProducts?.slice(0,10)?.map((product) => {
           return (
             <div
               className="w-[20rem] h-[20rem] rounded-lg shadow-xl hover:shadow-2xl p-4 bg-[whiteSmoke] duration-300"
@@ -164,14 +164,14 @@ function Products() {
             >
               <Link to={`/products/${product.id}`}>
                 <img
-                  src={product.attributes.image}
+                  src={product.image}
                   alt=""
                   className="w-full rounded-lg h-[70%]"
                 />
                 <p className="md:text-3xl text-xl py-3 font-semibold">
-                  {product.attributes.title}
+                  {product.title}
                 </p>
-                <p className="text-xl">${product.attributes.price / 100}</p>
+                <p className="text-xl">${product.price / 100}</p>
               </Link>
             </div>
           );
@@ -182,3 +182,13 @@ function Products() {
 }
 
 export default Products;
+
+
+// const [page , setPage] = useState(10);
+
+// button==> setpage(page+10) next
+// button==> setpage(page-10) prev
+
+//pagination -->roadsidecoder
+
+

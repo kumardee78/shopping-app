@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import Products from "./Products";
+// import Products from "./Products";
 import { ecomContext } from "../App";
 
 function SingleProduct() {
@@ -15,8 +15,8 @@ function SingleProduct() {
           `https://strapi-store-server.onrender.com/api/products/${id}`
         );
         const result = await response.json();
-        console.log(result.data.attributes);
-        setProduct(result.data.attributes);
+        let newObj = {...result?.data?.attributes , id}
+        setProduct(newObj);
       } catch (error) {
         console.log(error);
       }
@@ -45,7 +45,7 @@ function SingleProduct() {
             </p>
             <p className="md:text-2xl py-4 ">${product.price / 100}</p>
             <p className="md:text-xl  md:py-6">{product.description}</p>
-            <button className="bg-blue-300 text-white py-2 px-4 md:mb-4 md-0 my-6 md:my-0 " onClick={(e)=> handleAddToCart(e, product)}>Add To Cart</button>
+            <button className="bg-blue-300 text-white py-2 px-4 md:mb-4 md-0 my-6 md:my-0 " onClick={()=> handleAddToCart(product)}>Add To Cart</button>
           </div>
         </div>
       ) : (

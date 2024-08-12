@@ -4,10 +4,9 @@ import { Link } from "react-router-dom";
 
 function FeaturedProduct() {
   const { products } = useContext(ecomContext);
-  const featuredProducts = products.filter((product, index) => {
-    return product.attributes.featured === true;
-  });
-  // console.log(featuredProducts);
+  console.log(products);
+  const featuredProducts = products.filter(product => product.featured === true);
+  console.log(featuredProducts) 
 
   return (
     <div>
@@ -19,14 +18,14 @@ function FeaturedProduct() {
             <div className="w-[20rem] h-[25rem] rounded-lg shadow-xl hover:shadow-2xl p-4 bg-[whiteSmoke] duration-300" key={index}>
               <Link to={`/products/${prod.id}`}>
                 <img
-                  src={prod.attributes.image}
+                  src={prod.image}
                   alt=""
                   className="w-full rounded-lg h-[70%]"
                 />
                 <p className="text-3xl py-3 font-semibold">
-                  {prod.attributes.title}
+                  {prod.title}
                 </p>
-                <p className="text-xl py-3">${prod.attributes.price / 100}</p>
+                <p className="text-xl py-3">${prod.price / 100}</p>
               </Link>
             </div>
           );

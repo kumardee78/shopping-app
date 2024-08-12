@@ -7,35 +7,13 @@ import { Link } from "react-router-dom";
 function Cart() {
   const { cart, setCart, removeQuantity, addQuantity, subtotal } =
     useContext(ecomContext);
+console.log(subtotal);
 
-  const tax = 25.5;
-  const shipping = 5.1;
-  const total = subtotal + tax + shipping;
-
-  useEffect(() => {
-    if (cart.length > 0) localStorage.setItem("cart", JSON.stringify(cart));
-  }, [cart]);
-
-  useEffect(() => {
-    const storeCartItem = JSON.parse(localStorage.getItem("cart"));
-    if (storeCartItem) setCart(storeCartItem);
-  }, []);
-  console.log(cart);
-
-  // function removeFromCart(id) {
-  //   const newCart = cart.filter((item) => {
-  //     return item.id !== id;
-  //   });
-  //   setCart(newCart);
-  //   localStorage.setItem("cart", JSON.stringify(newCart));
-  // }
-
-  // function removeFromCart(index) {
-  //   const newCart = cart.filter((item, idx) => {
-  //     return item[idx] !== index;
-  //   });
-  //   setCart(newCart);
-  // }
+  const tax = 25;
+  const shipping = 5; 
+  
+  const total = (subtotal/100)+(tax + shipping);
+  
   function removeFromCart(index) {
     let newCart = cart.filter((item, idx) => {
       if (idx != index) return item;
@@ -132,7 +110,7 @@ function Cart() {
               </div>
               <p className="text-center my-6">
                 <Link
-                  to="/signin"
+                  to="/register"
                   className="py-2 px-4 bg-blue-300 text-white mx-auto"
                 >
                   Please LOGIN

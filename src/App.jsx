@@ -5,10 +5,12 @@ import Products from "./components/Products";
 import SingleProduct from "./components/SingleProduct";
 import Contact from "./components/Contact";
 import Cart from "./components/Cart";
-import { useEffect, useState } from "react";
-import { createContext } from "react";
+import { useEffect, useState, createContext } from "react";
 import ProductsOutlet from "./components/ProductsOutlet";
 import CheckOut from "./components/CheckOut";
+import SignUp from "./components/SignUp";
+import LoginIn from "./components/LoginIn";
+import LogOut from "./components/LogOut";
 
 export const ecomContext = createContext();
 
@@ -17,13 +19,45 @@ function App() {
   const [cart, setCart] = useState([]);
   const [subtotal, setsubTotal] = useState(0);
 
-  function handleAddToCart(e, product) {
-    product.quantity = 1;
-    console.log(product);
-    setCart([...cart, product]);
+  function handleAddToCart(product) {
+    const existingProductIndex = cart.find((item) => item.id === product.id);
+    if (!existingProductIndex) {
+      product.quantity = 1;
+      setCart([...cart, product]);
+    }
   }
 
-  // console.log(products);
+  useEffect(() => {
+    if (cart?.length > 0) localStorage.setItem("cart", JSON.stringify(cart));
+  }, [cart]);
+
+  useEffect(() => {
+    const storeCartItem = JSON.parse(localStorage.getItem("cart"));
+    if (storeCartItem) setCart(storeCartItem);
+  }, []);
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const response = await fetch(
+          "https://strapi-store-server.onrender.com/api/products"
+        );
+        const result = await response.json();
+        const newObj = result.data.map((item) => {
+          return { ...item.attributes, id: item.id };
+        });
+        console.log(result);
+
+        console.log(newObj);
+        setProducts(newObj);
+      } catch (error) {
+        console.error("Fetch error:", error);
+      }
+    }
+    fetchData();
+  }, []);
+  console.log(products);
+
   useEffect(() => {
     let sum = 0;
     cart.forEach((item) => {
@@ -45,20 +79,6 @@ function App() {
     setCart(newCart);
   }
 
-  useEffect(() => {
-    async function fetchData() {
-      const response = await fetch(
-        "https://strapi-store-server.onrender.com/api/products"
-      );
-      const result = await response.json();
-      // console.log(result.data);
-      setProducts(result.data);
-    }
-    if (products.length <= 0) {
-      fetchData();
-    }
-  }, []);
-
   return (
     <div>
       <BrowserRouter>
@@ -69,21 +89,24 @@ function App() {
             handleAddToCart,
             cart,
             setCart,
-            removeQuantity,
-            addQuantity,
             subtotal,
+            addQuantity,
+            removeQuantity,
           }}
         >
           <Header />
           <Routes>
-            <Route path="/" element={<Home />}></Route>
+            <Route path="/" element={<Home />} />
             <Route path="/products" element={<ProductsOutlet />}>
               <Route index element={<Products />} />
               <Route path=":id" element={<SingleProduct />} />
             </Route>
-            <Route path="/contact" element={<Contact />}></Route>
-            <Route path="/checkout" element={<CheckOut />}></Route>
-            <Route path="/cart" element={<Cart />}></Route>
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/cart" element={<Cart />} />
+            <Route path="/checkout" element={<CheckOut />} />
+            <Route path="/register" element={<SignUp />} />
+            <Route path="/loggedin" element={<LoginIn />} />
+            <Route path="/logout" element={<LogOut />} />
           </Routes>
         </ecomContext.Provider>
       </BrowserRouter>
