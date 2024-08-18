@@ -3,7 +3,6 @@ import Header from "./components/Header";
 import Home from "./components/Home";
 import Products from "./components/Products";
 import SingleProduct from "./components/SingleProduct";
-import Contact from "./components/Contact";
 import Cart from "./components/Cart";
 import { useEffect, useState, createContext } from "react";
 import ProductsOutlet from "./components/ProductsOutlet";
@@ -100,7 +99,6 @@ function App() {
               <Route index element={<Products />} />
               <Route path=":id" element={<SingleProduct />} />
             </Route>
-            <Route path="/contact" element={<Contact />} />
             <Route path="/cart" element={<Cart />} />
             <Route path="/checkout" element={<CheckOut />} />
             <Route path="/register" element={<SignUp />} />
