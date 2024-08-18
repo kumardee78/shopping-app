@@ -1,14 +1,17 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { useContext, useEffect, useState } from "react";
 import { MdShoppingCart } from "react-icons/md";
 import HamberMenu from "./HamberMenu";
 import { ecomContext } from "../App";
+import { auth } from "../firebase";
+import { signOut } from "firebase/auth";
 
 function Header() {
   const { cart } = useContext(ecomContext);
   const [isShown, setIsShown] = useState(false);
   const [qty, setQyt] = useState(0);
+  const navigate = useNavigate();
 
   function handleToggleDiv() {
     if (isShown) {
@@ -25,21 +28,46 @@ function Header() {
     setQyt(quantity);
   }, [cart]);
 
+  const logout = () => {
+    signOut(auth)
+      .then(() => navigate("/"))
+      .catch((err) => alert(err.message));
+  };
+
   return (
     <div>
       <div className="text-end py-3 bg-[#021431] text-white">
-        <Link to="/loggedin" className=" hover:text-gray-300 duration-300">
-          Login / Guest
-        </Link>
-        <Link to="/register" className="md:px-20 px-6 hover:text-gray-300 duration-300">
-          Create Account
-        </Link>
+        {auth.currentUser ? (
+          <>
+            <span className="hover:text-gray-300 duration-300">
+              Welcome! {auth.currentUser && auth.currentUser.displayName}
+            </span>
+            <button
+              className="md:px-20 px-6 hover:text-gray-300 duration-300"
+              onClick={logout}
+            >
+              Log Out
+            </button>
+          </>
+        ) : (
+          <>
+            <Link to="/loggedin" className=" hover:text-gray-300 duration-300">
+              Login / Guest
+            </Link>
+            <Link
+              to="/register"
+              className="md:px-20 px-6 hover:text-gray-300 duration-300"
+            >
+              Create Account
+            </Link>
+          </>
+        )}
       </div>
       <div className="flex justify-between items-center gap-4 bg-[#f0f6ff] md:px-12 lg:px-20  px-6 py-2">
         <div className="md:flex hidden justify-between items-center grow">
-          <h1 className="p-2 bg-[#021431] rounded-lg font-semibold text-xl text-white">
+          <Link to="/" className="p-2 bg-[#021431] rounded-lg font-semibold text-xl text-white">
             Shopping App
-          </h1>
+          </Link>
           <nav className="flex text-xl">
             <Link
               to="/"
@@ -61,13 +89,14 @@ function Header() {
               Cart
             </Link>
 
-            <Link
-              to="/checkout"
-              className="py-4 md:px-6 lg:px-8 hover:bg-gray-300 rounded-lg duration-300 font-semibold text-[#021431]"
-            >
-              CheckOut
-            </Link>
-            
+            {auth.currentUser && (
+              <Link
+                to="/checkout"
+                className="py-4 md:px-6 lg:px-8 hover:bg-gray-300 rounded-lg duration-300 font-semibold text-[#021431]"
+              >
+                CheckOut
+              </Link>
+            )}
           </nav>
         </div>
         <div className="text-2xl bg-[#f0f6ff] border-2 border-[#021431] p-1 md:hidden block relative">

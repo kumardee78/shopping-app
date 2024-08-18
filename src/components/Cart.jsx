@@ -3,17 +3,18 @@ import { ecomContext } from "../App";
 import { FaPlus } from "react-icons/fa6";
 import { FaMinus } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { auth } from "../firebase";
 
 function Cart() {
   const { cart, setCart, removeQuantity, addQuantity, subtotal } =
     useContext(ecomContext);
-console.log(subtotal);
+  console.log(subtotal);
 
   const tax = 25;
-  const shipping = 5; 
-  
-  const total = (subtotal/100)+(tax + shipping);
-  
+  const shipping = 5;
+
+  const total = subtotal / 100 + (tax + shipping);
+
   function removeFromCart(index) {
     let newCart = cart.filter((item, idx) => {
       if (idx != index) return item;
@@ -109,12 +110,21 @@ console.log(subtotal);
                 </p>
               </div>
               <p className="text-center my-6">
-                <Link
-                  to="/register"
-                  className="py-2 px-4 bg-blue-300 text-white mx-auto"
-                >
-                  Please LOGIN
-                </Link>
+                {auth.currentUser ? (
+                  <Link
+                    to="/checkout"
+                    className="py-2 px-4 bg-blue-300 text-white mx-auto"
+                  >
+                    checkout
+                  </Link>
+                ) : (
+                  <Link
+                    to="/loggedin"
+                    className="py-2 px-4 bg-blue-300 text-white mx-auto"
+                  >
+                    Please LOGIN
+                  </Link>
+                )}
               </p>
             </div>
           </div>

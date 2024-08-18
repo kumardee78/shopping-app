@@ -1,9 +1,10 @@
 import React, { useContext, useState } from "react";
 import { ecomContext } from "../App";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+
 
 function CheckOut() {
-  const { subtotal } = useContext(ecomContext);
+  const { subtotal, setCart } = useContext(ecomContext);
   const [data, setData] = useState({
     username: "",
     email: "",
@@ -22,8 +23,9 @@ function CheckOut() {
   }
   function handleSubmit(e) {
     e.preventDefault();
-    navigate("/orderpage")
-    
+    alert("Your order has been placed successfully!")
+    setTimeout(()=>navigate("/"), 3000)
+    setCart([])
   }
 
   return (

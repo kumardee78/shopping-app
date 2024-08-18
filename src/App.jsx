@@ -10,7 +10,6 @@ import ProductsOutlet from "./components/ProductsOutlet";
 import CheckOut from "./components/CheckOut";
 import SignUp from "./components/SignUp";
 import LoginIn from "./components/LoginIn";
-import LogOut from "./components/LogOut";
 
 export const ecomContext = createContext();
 
@@ -106,7 +105,6 @@ function App() {
             <Route path="/checkout" element={<CheckOut />} />
             <Route path="/register" element={<SignUp />} />
             <Route path="/loggedin" element={<LoginIn />} />
-            <Route path="/logout" element={<LogOut />} />
           </Routes>
         </ecomContext.Provider>
       </BrowserRouter>

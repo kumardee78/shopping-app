@@ -1,25 +1,37 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { auth } from "../firebase";
+import { signInWithEmailAndPassword } from "firebase/auth";
 
 function LoginIn() {
   const [userData, setUSerDate] = useState({
     email: "",
     password: "",
   });
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   function handleChange(e) {
     setUSerDate({ ...userData, [e.target.name]: e.target.value });
   }
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
+    try {
+      const loggedInUser = await signInWithEmailAndPassword(
+        auth,
+        userData.email,
+        userData.password
+      );
+      if (loggedInUser) navigate("/");
+    } catch (error) {
+      alert(`${error.message}`);
+      navigate("/register");
+    }
     setUSerDate({ email: "", password: "" });
-    navigate('/')
   }
 
   return (
-    <div className="model-overlay fiexed top-0 left-0 right-0 bottom-0 bg-[rgba(0,0,0,0.5)] h-screen flex items-center justify-center z-1000">
+    <div className="model-overlay fiexed top-0 left-0 right-0 bottom-0 bg-[rgba(0,0,0,0.5)] py-32 flex items-center justify-center z-1000">
       <div className="model-content bg-white p-8 rounded-lg relative w-[25rem] shadow-lg">
         <h2 className="text-3xl text-center font-bold">Login</h2>
         <form action="" method="post" onSubmit={handleSubmit} className="py-6">
