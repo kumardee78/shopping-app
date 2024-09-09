@@ -102,7 +102,7 @@ function Header() {
         <div className="text-2xl bg-[#f0f6ff] border-2 border-[#021431] p-1 md:hidden block relative">
           <GiHamburgerMenu className="" onClick={handleToggleDiv} />
         </div>
-        <HamberMenu isShown={isShown} className="lg:hidden block" />
+        <HamberMenu isShown={isShown} className="md:hidden block" />
         <p className="text-2xl p-4 rounded-full hover:bg-gray-300 duration-300 relative">
           <MdShoppingCart />
           <span className="absolute top-0 text-white px-1 right-2 border bg-red-500 rounded-full text-sm">

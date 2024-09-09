@@ -15,7 +15,6 @@ export const ecomContext = createContext();
 function App() {
   const [products, setProducts] = useState([]);
   const [cart, setCart] = useState([]);
-  const [subtotal, setsubTotal] = useState(0);
 
   function handleAddToCart(product) {
     const existingProductIndex = cart.find((item) => item.id === product.id);
@@ -44,9 +43,9 @@ function App() {
         const newObj = result.data.map((item) => {
           return { ...item.attributes, id: item.id };
         });
-        console.log(result);
+        // console.log(result);
 
-        console.log(newObj);
+        // console.log(newObj);
         setProducts(newObj);
       } catch (error) {
         console.error("Fetch error:", error);
@@ -54,15 +53,15 @@ function App() {
     }
     fetchData();
   }, []);
-  console.log(products);
+  // console.log(products);
 
-  useEffect(() => {
-    let sum = 0;
-    cart.forEach((item) => {
-      sum += item.price * item.quantity;
-    });
-    setsubTotal(sum);
-  }, [cart]);
+  // useEffect(() => {
+  //   let sum = 0;
+  //   cart.forEach((item) => {
+  //     sum += item.price * item.quantity;
+  //   });
+  //   setsubTotal(sum);
+  // }, [cart]);
 
   function addQuantity(index) {
     console.log(index);
@@ -87,7 +86,6 @@ function App() {
             handleAddToCart,
             cart,
             setCart,
-            subtotal,
             addQuantity,
             removeQuantity,
           }}

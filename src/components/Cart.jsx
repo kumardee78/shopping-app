@@ -6,14 +6,26 @@ import { Link } from "react-router-dom";
 import { auth } from "../firebase";
 
 function Cart() {
-  const { cart, setCart, removeQuantity, addQuantity, subtotal } =
+
+  const { cart, setCart, removeQuantity, addQuantity } =
     useContext(ecomContext);
-  console.log(subtotal);
 
-  const tax = 25;
-  const shipping = 5;
+  const [subTotal, setsubTotal] = useState();
+  const [tax, setTax] = useState(Number(Math.round(subTotal/10)));
+  const [shipping, setShipping] = useState(5);
 
-  const total = subtotal / 100 + (tax + shipping);
+  useEffect(() => {
+    let sum = 0;
+    cart.forEach((item) => {
+      sum += (item.price * item.quantity)/100;
+    });
+    setsubTotal(sum);
+  }, [cart]);
+
+  useEffect(()=>{
+    let tax = subTotal/10
+    setTax(Math.round(tax))
+  },[subTotal])
 
   function removeFromCart(index) {
     let newCart = cart.filter((item, idx) => {
@@ -89,23 +101,23 @@ function Cart() {
               <div className="border bg-blue-100 md:my-0 my-6 rounded-lg p-4 ">
                 <p className="flex justify-between py-2">
                   <span>SubTotal</span>
-                  <span className="font-semibold">${subtotal / 100}</span>
+                  <span className="font-semibold">${subTotal.toFixed(2)}</span>
                 </p>
                 <hr className="border-gray-300" />
                 <p className="flex justify-between py-2">
-                  <span>Shipping</span>
+                  <span>Shipping:</span>
                   <span className="font-semibold">${shipping}</span>
                 </p>
                 <hr className="border-gray-300" />
                 <p className="flex justify-between py-2">
-                  <span>Tax</span>
+                  <span>Tax:</span>
                   <span className="font-semibold">${tax}</span>
                 </p>
                 <hr className="border-gray-300" />
                 <p className="flex justify-between py-6">
                   <span className="font-semibold text-xl">Order Total</span>
                   <span className="font-semibold">
-                    ${Math.abs(total) / 100}
+                    ${(subTotal + shipping + tax).toFixed(2)}
                   </span>
                 </p>
               </div>

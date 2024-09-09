@@ -1,12 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { auth } from "../firebase";
 
-function HamberMenu({isShown}) {
+function HamberMenu({ isShown }) {
   return (
-    <div className="absolute top-[6.5rem] -left-2 z-10">
+    <div className="absolute top-[7.2rem] left-2 z-10">
       <nav
         className={
-          isShown ? "w-[15rem] bg-[whiteSmoke] mt-2 rounded-xl ml-4" : "hidden"
+          isShown ? "w-[15rem] bg-[whitesmoke] mt-2 rounded-xl ml-4 mb-4" : "hidden"
         }
       >
         <Link
@@ -22,17 +23,20 @@ function HamberMenu({isShown}) {
           Products
         </Link>
         <Link
-              to="/cart"
-              className="py-4 px-8 hover:bg-gray-300 rounded-lg duration-300 font-semibold text-[#021431]"
-            >
-              Cart
-            </Link>
-        <Link
-          to="/checkout"
+          to="/cart"
           className="py-4 px-8 hover:bg-gray-300 rounded-lg duration-300 font-semibold text-[#021431] block"
         >
-          CheckOut
+          Cart
         </Link>
+
+        {auth.currentUser && (
+          <Link
+            to="/checkout"
+            className="py-4 px-8 hover:bg-gray-300 rounded-lg duration-300 font-semibold text-[#021431] block"
+          >
+            CheckOut
+          </Link>
+        )}
       </nav>
     </div>
   );
