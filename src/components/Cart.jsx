@@ -6,23 +6,8 @@ import { Link } from "react-router-dom";
 import { auth } from "../firebase";
 
 function Cart() {
-  const { cart, setCart } = useContext(ecomContext);
-
-  const [subTotal, setsubTotal] = useState();
-  const [tax, setTax] = useState(Number(Math.round(subTotal / 10)));
-  const [shipping, setShipping] = useState(5);
-  const [total, setTotal] = useState();
-
-  useEffect(() => {
-    let sum = 0;
-    cart.forEach((item) => {
-      sum += (item.price * item.quantity) / 100;
-    });
-    setsubTotal(sum);
-    let tax = subTotal / 10;
-    setTax(Math.round(tax));
-    setTotal(Math.round(subTotal + tax + shipping));
-  }, [cart, subTotal, tax]);
+  const { cart, setCart, subTotal, tax, shipping, total } =
+    useContext(ecomContext);
 
   function removeFromCart(index) {
     let newCart = cart.filter((item, idx) => {

@@ -16,7 +16,21 @@ function App() {
   const [products, setProducts] = useState([]);
   const [cart, setCart] = useState([]);
 
-  
+  const [subTotal, setsubTotal] = useState();
+  const [tax, setTax] = useState(Number(Math.round(subTotal / 10)));
+  const [shipping, setShipping] = useState(5);
+  const [total, setTotal] = useState();
+
+  useEffect(() => {
+    let sum = 0;
+    cart.forEach((item) => {
+      sum += (item.price * item.quantity) / 100;
+    });
+    setsubTotal(sum);
+    let tax = subTotal / 10;
+    setTax(Math.round(tax));
+    setTotal(Math.round(subTotal + tax + shipping));
+  }, [cart, subTotal, tax]);
 
   useEffect(() => {
     if (cart?.length > 0) localStorage.setItem("cart", JSON.stringify(cart));
@@ -49,8 +63,6 @@ function App() {
   }, []);
   // console.log(products);
 
- 
-
   return (
     <div>
       <BrowserRouter>
@@ -59,7 +71,11 @@ function App() {
             products,
             setProducts,
             cart,
-            setCart
+            setCart,
+            subTotal,
+            tax,
+            shipping,
+            total,
           }}
         >
           <Header />

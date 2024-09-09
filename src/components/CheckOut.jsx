@@ -2,9 +2,8 @@ import React, { useContext, useState } from "react";
 import { ecomContext } from "../App";
 import { useNavigate } from "react-router-dom";
 
-
 function CheckOut() {
-  const { subtotal, setCart } = useContext(ecomContext);
+  const { subTotal, setCart, tax, shipping, total } = useContext(ecomContext);
   const [data, setData] = useState({
     username: "",
     email: "",
@@ -12,20 +11,16 @@ function CheckOut() {
     mobile: "",
   });
 
-  const navigate = useNavigate()
-
-  const tax = 25.5;
-  const shipping = 5.1;
-  const total = subtotal + tax + shipping;
+  const navigate = useNavigate();
 
   function handleChange(e) {
     setData({ ...data, [e.target.name]: e.target.value });
   }
   function handleSubmit(e) {
     e.preventDefault();
-    alert("Your order has been placed successfully!")
-    setTimeout(()=>navigate("/"), 3000)
-    setCart([])
+    alert("Your order has been placed successfully!");
+    setTimeout(() => navigate("/"), 3000);
+    setCart([]);
   }
 
   return (
@@ -87,7 +82,7 @@ function CheckOut() {
         <div className="border bg-blue-100 my-4 rounded-lg p-4 ">
           <p className="flex justify-between py-2">
             <span>SubTotal</span>
-            <span className="font-semibold">${subtotal / 100}</span>
+            <span className="font-semibold">${subTotal}</span>
           </p>
           <hr className="border-gray-300" />
           <p className="flex justify-between py-2">
@@ -102,7 +97,7 @@ function CheckOut() {
           <hr className="border-gray-300" />
           <p className="flex justify-between py-6">
             <span className="font-semibold text-xl">Order Total</span>
-            <span className="font-semibold">${Math.abs(total) / 100}</span>
+            <span className="font-semibold">${total}</span>
           </p>
         </div>
       </div>
