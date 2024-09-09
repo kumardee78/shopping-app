@@ -26,7 +26,7 @@ function App() {
     cart.forEach((item) => {
       sum += (item.price * item.quantity) / 100;
     });
-    setsubTotal(sum);
+    setsubTotal(Math.round(sum));
     let tax = subTotal / 10;
     setTax(Math.round(tax));
     setTotal(Math.round(subTotal + tax + shipping));
