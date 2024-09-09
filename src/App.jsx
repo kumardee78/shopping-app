@@ -16,13 +16,7 @@ function App() {
   const [products, setProducts] = useState([]);
   const [cart, setCart] = useState([]);
 
-  function handleAddToCart(product) {
-    const existingProductIndex = cart.find((item) => item.id === product.id);
-    if (!existingProductIndex) {
-      product.quantity = 1;
-      setCart([...cart, product]);
-    }
-  }
+  
 
   useEffect(() => {
     if (cart?.length > 0) localStorage.setItem("cart", JSON.stringify(cart));
@@ -55,26 +49,7 @@ function App() {
   }, []);
   // console.log(products);
 
-  // useEffect(() => {
-  //   let sum = 0;
-  //   cart.forEach((item) => {
-  //     sum += item.price * item.quantity;
-  //   });
-  //   setsubTotal(sum);
-  // }, [cart]);
-
-  function addQuantity(index) {
-    console.log(index);
-    const newCart = [...cart];
-    newCart[index].quantity += 1;
-    setCart(newCart);
-  }
-
-  function removeQuantity(index) {
-    let newCart = [...cart];
-    if (newCart[index].quantity > 1) newCart[index].quantity -= 1;
-    setCart(newCart);
-  }
+ 
 
   return (
     <div>
@@ -83,11 +58,8 @@ function App() {
           value={{
             products,
             setProducts,
-            handleAddToCart,
             cart,
-            setCart,
-            addQuantity,
-            removeQuantity,
+            setCart
           }}
         >
           <Header />

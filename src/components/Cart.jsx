@@ -6,26 +6,23 @@ import { Link } from "react-router-dom";
 import { auth } from "../firebase";
 
 function Cart() {
-
-  const { cart, setCart, removeQuantity, addQuantity } =
-    useContext(ecomContext);
+  const { cart, setCart } = useContext(ecomContext);
 
   const [subTotal, setsubTotal] = useState();
-  const [tax, setTax] = useState(Number(Math.round(subTotal/10)));
+  const [tax, setTax] = useState(Number(Math.round(subTotal / 10)));
   const [shipping, setShipping] = useState(5);
+  const [total, setTotal] = useState();
 
   useEffect(() => {
     let sum = 0;
     cart.forEach((item) => {
-      sum += (item.price * item.quantity)/100;
+      sum += (item.price * item.quantity) / 100;
     });
     setsubTotal(sum);
-  }, [cart]);
-
-  useEffect(()=>{
-    let tax = subTotal/10
-    setTax(Math.round(tax))
-  },[subTotal])
+    let tax = subTotal / 10;
+    setTax(Math.round(tax));
+    setTotal(Math.round(subTotal + tax + shipping));
+  }, [cart, subTotal, tax]);
 
   function removeFromCart(index) {
     let newCart = cart.filter((item, idx) => {
@@ -33,6 +30,18 @@ function Cart() {
     });
     setCart(newCart);
     localStorage.setItem("cart", JSON.stringify(newCart));
+  }
+
+  function addQuantity(index) {
+    const newCart = [...cart];
+    newCart[index].quantity += 1;
+    setCart(newCart);
+  }
+
+  function removeQuantity(index) {
+    let newCart = [...cart];
+    if (newCart[index].quantity > 1) newCart[index].quantity -= 1;
+    setCart(newCart);
   }
 
   return (
@@ -101,7 +110,7 @@ function Cart() {
               <div className="border bg-blue-100 md:my-0 my-6 rounded-lg p-4 ">
                 <p className="flex justify-between py-2">
                   <span>SubTotal</span>
-                  <span className="font-semibold">${subTotal.toFixed(2)}</span>
+                  <span className="font-semibold">${subTotal}</span>
                 </p>
                 <hr className="border-gray-300" />
                 <p className="flex justify-between py-2">
@@ -116,9 +125,7 @@ function Cart() {
                 <hr className="border-gray-300" />
                 <p className="flex justify-between py-6">
                   <span className="font-semibold text-xl">Order Total</span>
-                  <span className="font-semibold">
-                    ${(subTotal + shipping + tax).toFixed(2)}
-                  </span>
+                  <span className="font-semibold">${total}</span>
                 </p>
               </div>
               <p className="text-center my-6">

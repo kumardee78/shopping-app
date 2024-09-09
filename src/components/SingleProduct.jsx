@@ -5,7 +5,7 @@ import { ecomContext } from "../App";
 
 function SingleProduct() {
   const { id } = useParams();
-  const { handleAddToCart } = useContext(ecomContext);
+  const { cart, setCart } = useContext(ecomContext);
   const [product, setProduct] = useState({});
 
   useEffect(() => {
@@ -15,7 +15,7 @@ function SingleProduct() {
           `https://strapi-store-server.onrender.com/api/products/${id}`
         );
         const result = await response.json();
-        let newObj = {...result?.data?.attributes , id}
+        let newObj = { ...result?.data?.attributes, id };
         setProduct(newObj);
       } catch (error) {
         console.log(error);
@@ -24,6 +24,13 @@ function SingleProduct() {
     fetchSingleProduct();
   }, [id]);
 
+  function handleAddToCart(product) {
+    const existingProductIndex = cart.find((item) => item.id === product.id);
+    if (!existingProductIndex) {
+      product.quantity = 1;
+      setCart([...cart, product]);
+    }
+  }
 
   return (
     <>
@@ -45,7 +52,12 @@ function SingleProduct() {
             </p>
             <p className="md:text-2xl py-4 ">${product.price / 100}</p>
             <p className="md:text-xl  md:py-6">{product.description}</p>
-            <button className="bg-blue-300 text-white py-2 px-4 md:mb-4 md-0 my-6 md:my-0 " onClick={()=> handleAddToCart(product)}>Add To Cart</button>
+            <button
+              className="bg-blue-300 text-white py-2 px-4 md:mb-4 md-0 my-6 md:my-0 "
+              onClick={() => handleAddToCart(product)}
+            >
+              Add To Cart
+            </button>
           </div>
         </div>
       ) : (
