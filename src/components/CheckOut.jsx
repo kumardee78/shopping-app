@@ -1,6 +1,7 @@
 import React, { useContext, useState } from "react";
 import { ecomContext } from "../App";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 function CheckOut() {
   const { subTotal, setCart, tax, shipping, total } = useContext(ecomContext);
@@ -18,15 +19,15 @@ function CheckOut() {
   }
   function handleSubmit(e) {
     e.preventDefault();
-    alert("Your order has been placed successfully!");
+    toast.success("Your order has been placed successfully!");
     setTimeout(() => navigate("/"), 3000);
     setCart([]);
   }
 
   return (
-    <div className="md:flex md:px-20 px-8 py-16">
-      <div className="md:w-[60%] md:px-10 py-6 shadow-lg px-4 bg-[#f0f6ff]">
-        <h3 className="text-xl md:text-2xl font-semibold mb-6">
+    <div  className="md:flex md:px-20 px-8 py-16">
+      <div data-aos="fade-right" className="md:w-[60%] md:px-10 py-6 shadow-lg px-6 bg-[#f0f6ff]">
+        <h3 className="text-2xl font-semibold mb-6">
           Place Your Order
         </h3>
         <form action="" onSubmit={handleSubmit} className="">
@@ -78,7 +79,7 @@ function CheckOut() {
           </button>
         </form>
       </div>
-      <div className="md:w-[35%] md:mx-6 mx-auto">
+      <div data-aos="fade-left" className="md:w-[35%] md:mx-6 mx-auto">
         <div className="border bg-blue-100 my-4 rounded-lg p-4 ">
           <p className="flex justify-between py-2">
             <span>SubTotal</span>

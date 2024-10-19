@@ -9,6 +9,10 @@ import ProductsOutlet from "./components/ProductsOutlet";
 import CheckOut from "./components/CheckOut";
 import SignUp from "./components/SignUp";
 import LoginIn from "./components/LoginIn";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 export const ecomContext = createContext();
 
@@ -42,6 +46,16 @@ function App() {
   }, []);
 
   useEffect(() => {
+    AOS.init({
+      duration: 1400, // Animation duration
+    });
+  }, []);
+
+  useEffect(() => {
+    AOS.refresh();
+  }, []);
+
+  useEffect(() => {
     async function fetchData() {
       try {
         const response = await fetch(
@@ -52,8 +66,7 @@ function App() {
           return { ...item.attributes, id: item.id };
         });
         // console.log(result);
-
-        // console.log(newObj);
+        
         setProducts(newObj);
       } catch (error) {
         console.error("Fetch error:", error);
@@ -65,6 +78,7 @@ function App() {
 
   return (
     <div>
+      <ToastContainer position="top-center" autoClose={2000} theme="dark" />
       <BrowserRouter>
         <ecomContext.Provider
           value={{

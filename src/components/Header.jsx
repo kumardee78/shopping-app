@@ -38,7 +38,7 @@ function Header() {
     <div>
       <div className="text-end py-3 bg-[#021431] text-white">
         {auth.currentUser ? (
-          <>
+          <div data-aos="fade-left">
             <span className="hover:text-gray-300 duration-300">
               Welcome! {auth.currentUser && auth.currentUser.displayName}
             </span>
@@ -48,7 +48,7 @@ function Header() {
             >
               Log Out
             </button>
-          </>
+          </div>
         ) : (
           <>
             <Link to="/loggedin" className=" hover:text-gray-300 duration-300">
@@ -65,7 +65,10 @@ function Header() {
       </div>
       <div className="flex justify-between items-center gap-4 bg-[#f0f6ff] md:px-12 lg:px-20  px-6 py-2">
         <div className="md:flex hidden justify-between items-center grow">
-          <Link to="/" className="p-2 bg-[#021431] rounded-lg font-semibold text-xl text-white">
+          <Link
+            to="/"
+            className="p-2 bg-[#021431] rounded-lg font-semibold text-xl text-white"
+          >
             Shopping App
           </Link>
           <nav className="flex text-xl">
@@ -103,7 +106,10 @@ function Header() {
           <GiHamburgerMenu className="" onClick={handleToggleDiv} />
         </div>
         <HamberMenu isShown={isShown} className="md:hidden block" />
-        <p className="text-2xl p-4 rounded-full hover:bg-gray-300 duration-300 relative">
+        <p
+          className="text-2xl p-4 rounded-full hover:bg-gray-300 duration-300 relative"
+          onClick={() => navigate("/cart")}
+        >
           <MdShoppingCart />
           <span className="absolute top-0 text-white px-1 right-2 border bg-red-500 rounded-full text-sm">
             {qty}

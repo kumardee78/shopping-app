@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { auth } from "../firebase";
 import { signInWithEmailAndPassword } from "firebase/auth";
+import { toast } from "react-toastify";
 
 function LoginIn() {
   const [userData, setUSerDate] = useState({
@@ -24,15 +25,14 @@ function LoginIn() {
       );
       if (loggedInUser) navigate("/");
     } catch (error) {
-      alert(`${error.message}`);
-      navigate("/register");
+      toast.error("Invalid Username or Password")
     }
     setUSerDate({ email: "", password: "" });
   }
 
   return (
-    <div className="model-overlay fiexed top-0 left-0 right-0 bottom-0 bg-[rgba(0,0,0,0.5)] py-32 flex items-center justify-center z-1000">
-      <div className="model-content bg-white p-8 rounded-lg relative w-[25rem] shadow-lg">
+    <div  className="model-overlay fiexed top-0 left-0 right-0 bottom-0 bg-[rgba(0,0,0,0.5)] py-32 flex items-center justify-center z-1000">
+      <div data-aos="zoom-in" className="model-content bg-white p-8 rounded-lg relative w-[25rem] shadow-lg">
         <h2 className="text-3xl text-center font-bold">Login</h2>
         <form action="" method="post" onSubmit={handleSubmit} className="py-6">
           <p>

@@ -15,7 +15,7 @@ function FeaturedProduct() {
       <div className="flex flex-wrap gap-4 text-center text-xl py-20">
         {featuredProducts.map((prod, index) => {
           return (
-            <div className="w-[20rem] h-[25rem] rounded-lg shadow-xl hover:shadow-2xl p-4 bg-[whiteSmoke] duration-300" key={index}>
+            <div data-aos="fade-left" className="w-[20rem] h-[25rem] rounded-lg shadow-xl hover:shadow-2xl p-4 bg-[whiteSmoke] duration-300 overflow-hidden" key={index}>
               <Link to={`/products/${prod.id}`}>
                 <img
                   src={prod.image}

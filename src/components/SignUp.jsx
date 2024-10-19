@@ -2,7 +2,7 @@ import React, { useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth } from "../firebase";
-
+import { toast } from "react-toastify";
 
 
 function SignUp() {
@@ -36,11 +36,11 @@ function SignUp() {
 
   return (
     <div className="model-overlay fiexed top-0 left-0 right-0 bottom-0 bg-[rgba(0,0,0,0.5)] py-20 flex items-center justify-center z-1000">
-      <div className="model-content bg-white p-8 rounded-lg relative w-[25rem] shadow-lg">
+      <div data-aos="zoom-in" className="model-content bg-white p-8 rounded-lg relative w-[25rem] shadow-lg">
         <h2 className="text-3xl text-center font-bold">Register</h2>
         <form action="" method="post" onSubmit={handleSubmit} className="py-6">
           <p>
-            <label htmlFor="" className="text-xl ">
+            <label htmlFor="" className="text-xl">
               Username
             </label>
             <br />

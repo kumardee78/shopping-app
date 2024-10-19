@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 function Hero() {
   return (
     <div className="md:flex items-center md:py-32 py-16 ">
-      <div className="flex items-center justify-start md:w-[50%]">
+      <div data-aos="fade-right" className="flex items-center justify-start md:w-[50%]">
         <div className="md:w-[85%] ">
           <h1 className="md:text-6xl text-4xl font-bold text-[#394e6a]">
             We are changing the way people shop
@@ -20,11 +20,12 @@ function Hero() {
           </Link>
         </div>
       </div>
-      <div className="md:block hidden h-[30rem] p-4 bg-[#021431] rounded-xl w-[50%]">
+      <div data-aos="fade-left" className="md:block hidden h-[30rem] p-4 bg-[#021431] rounded-xl w-[50%]">
         <img
           src="hero1-deae5a1f.webp"
           alt=""
           className="h-full w-[30rem] rounded-xl"
+          data-aos="fade-left"
         />
       </div>
     </div>

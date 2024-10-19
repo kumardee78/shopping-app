@@ -4,6 +4,7 @@ import { FaPlus } from "react-icons/fa6";
 import { FaMinus } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { auth } from "../firebase";
+import { toast } from "react-toastify";
 
 function Cart() {
   const { cart, setCart, subTotal, tax, shipping, total } =
@@ -14,6 +15,7 @@ function Cart() {
       if (idx != index) return item;
     });
     setCart(newCart);
+    toast.success("Item removed successfully from cart");
     localStorage.setItem("cart", JSON.stringify(newCart));
   }
 
@@ -40,6 +42,7 @@ function Cart() {
               {cart.map((item, index) => {
                 return (
                   <div
+                    data-aos="fade-right"
                     className="sm:flex bg-[whiteSmoke] grow rounded-lg p-4 relative mb-3"
                     key={index}
                   >
@@ -91,7 +94,7 @@ function Cart() {
                 );
               })}
             </div>
-            <div className="md:w-[35%] md:mx-6 mx-auto">
+            <div data-aos="fade-left" className="md:w-[35%] md:mx-6 mx-auto">
               <div className="border bg-blue-100 md:my-0 my-6 rounded-lg p-4 ">
                 <p className="flex justify-between py-2">
                   <span>SubTotal</span>
@@ -117,14 +120,14 @@ function Cart() {
                 {auth.currentUser ? (
                   <Link
                     to="/checkout"
-                    className="py-2 px-4 bg-blue-300 text-white mx-auto"
+                    className="py-2 px-4 bg-blue-300 text-white mx-auto hover:bg-white hover:text-blue-500 hover:border hover:border-blue-500 hover:font-semibold duration-300 text-xl"
                   >
                     checkout
                   </Link>
                 ) : (
                   <Link
                     to="/loggedin"
-                    className="py-2 px-4 bg-blue-300 text-white mx-auto"
+                    className="py-2 px-4 bg-blue-300 text-white mx-auto hover:bg-white hover:text-blue-500 hover:border hover:border-blue-500 hover:font-semibold duration-300 text-xl"
                   >
                     Please LOGIN
                   </Link>
